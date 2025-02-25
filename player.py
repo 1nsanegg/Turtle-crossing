@@ -14,6 +14,7 @@ class Player(Turtle):
         self.penup()
         self.goto(STARTING_POSITION)
         self.seth(90)
+        self.refresh_time = 0
 
     def move(self):
         if self.ycor() < FINISH_LINE_Y:
@@ -22,4 +23,4 @@ class Player(Turtle):
             self.refresh()
     def refresh(self):
         self.goto(STARTING_POSITION)
-
+        self.refresh_time +=1

@@ -14,23 +14,30 @@ screen.bgcolor("white")
 
 turtle = Player()
 scoreboard = Scoreboard()
-current_level = scoreboard.level
+level = 0
 
 screen.listen()
 screen.onkey(turtle.move, "Up")
-
+game_loop = 0
 game_is_on = True
 while game_is_on:
     time.sleep(0.1)
     screen.update()
-
-
-    if random.randint(1, car_spawn_chance) == 1:
-        new_car = CarManager()
+    if game_loop == 6:
+        new_car = CarManager(level)
         cars.append(new_car)
+        game_loop = 0
     for car in cars:
+        if turtle.distance(car) < 15:
+            game_is_on = False
+            scoreboard.game_over()
         car.run()
-    if turtle.position == (0,0):
+    if level < turtle.refresh_time:
+        level += 1
         scoreboard.increase_level()
         for car in cars:
             car.faster()
+    game_loop +=1
+
+
+screen.exitonclick()
